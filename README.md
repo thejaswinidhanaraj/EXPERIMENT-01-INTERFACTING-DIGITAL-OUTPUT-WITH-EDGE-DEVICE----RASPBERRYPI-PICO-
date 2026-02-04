@@ -1,8 +1,8 @@
 # EXPERIMENT-01-INTERFACTING-DIGITAL-OUTPUT-WITH-EDGE-DEVICE---(RASPBERRYPI-PICO)
-### NAME 
-### DEPARTMENT 
-### ROLL NO 
-### DATE OF EXPERIMENT 
+### NAME : THEJASWINI D
+### DEPARTMENT :B.E.CSE(IOT)
+### ROLL NO : 212223110059
+### DATE OF EXPERIMENT :04.02.2026
 
 ### AIM
 To interface a digital output device (LED) with the Raspberry Pi Pico and control it using MicroPython.
@@ -41,14 +41,45 @@ Connect the cathode (shorter leg) of the LED to GND (ground).
 
 ## PROGRAM (MicroPython)
 ```
+import RPi.GPIO as GPIO
+import time
+import urllib.request
+#ThingSpeak details
+WRITE_API_KEY="UMETZ0NGLC8SYTG4"
+CHANNEL_ID = 3249653
+THINGSPEAK_URL = "https://api.thingspeak.com/update"
+#Set GPIO numbering mode
+GPIO.setmode (GPIO.BCM)
 
+# Define LED pin
+LED_PIN 18
 
- 
+#Set GPI018 as output
+GPIO.setup(LED_PIN, GPIO.OUT)
 
+def send_to_thingspeak(value):
+    url=f"https://api.thingspeak.com/update?api_key-UMETZ0NGLC8SYTG4&field=(value)"
+    urllib.request.urlopen(url)
+    print("Sent to ThingSpeak:", value)
 
+try:
+    while True:
+        #LED_ON
+        GPIO.output(LED_PIN, GPIO.HIGH)
+        print("LED_ON")
+        send_to_thingspeak(1)
+        time.sleep(15)
+        #LED_OFF
+        GPIO.output (LED_PIN, GPIO.LOW)
+        print("LED_OFF")
+        send_to_thingspeak(0)
+        time.sleep(15)
 
- 
-````
+except KeyboardInterrupt:
+    print("Program stopped")
+finally:
+    GPIO.cleanup()
+```
 
 ### OUPUT  
 
